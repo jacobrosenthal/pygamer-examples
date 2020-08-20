@@ -32,9 +32,18 @@ micromath = "1.0.1"
 [patch.crates-io]
 pygamer = { version = "0.5.0", git = "https://github.com/jacobrosenthal/atsamd", branch = "i2c-error" }
 
+[dependencies.tfmicro]
+version = "0.1.0"
+features = ["cmsis-nn"]
+optional = true
+
 [features]
 # ask the HAL to enable extra features
 default = ["pygamer/sd-card", "pygamer/usb"]
+tf = ["tfmicro"]
+tf_train = []
+tf_test_ring = []
+tf_test_slope = []
 
 # setting dev to same as release until theres a way to have
 # vscode run use release mode. Almost nobody has a debugger
@@ -44,7 +53,7 @@ codegen-units = 1
 debug = 1
 debug-assertions = false
 incremental = false
-lto = "fat"
+lto = "thin" # tensorflow hardfaults on invoke with fat
 opt-level = 3 # neopixel prefers 3 over s
 overflow-checks = false
 
@@ -53,6 +62,10 @@ codegen-units = 1
 debug = 1
 debug-assertions = false
 incremental = false
-lto = "fat"
+lto = "thin" # tensorflow hardfaults on invoke with fat
 opt-level = 3 # neopixel prefers 3 over s
 overflow-checks = false
+
+[[example]]
+name = "magic_wand"
+required-features = ["tf"]

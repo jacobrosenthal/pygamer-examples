@@ -1,0 +1,58 @@
+[package]
+name = "pygamer-examples"
+version = "0.1.0"
+authors = ["Jacob Rosenthal <jacobrosenthal@gmail.com>"]
+edition = "2018"
+repository = "https://github.com/jacobrosenthal/pygamer-examples"
+keywords = ["pygamer"]
+license = "MIT OR Apache-2.0"
+publish = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dev-dependencies]
+pygamer = "~0.5"
+pygamer-panic-led = "0.1.0"
+panic_rtt = "0.3.0"
+panic-halt = "~0.2"
+cortex-m = "0.6.3"
+cortex-m-rt = "0.6.12"
+cortex-m-rtic = "~0.5.1"
+embedded-hal = "~0.2.3"
+embedded-sdmmc = "0.3.0"
+usb-device = "~0.2"
+usbd-serial = "~0.1"
+ws2812-timer-delay = "~0.3"
+smart-leds = "0.3"
+embedded-graphics = "0.6.2"
+st7735-lcd = "0.7"
+lis3dh = { version = "0.2.0", git = "https://github.com/jacobrosenthal/lis3dh-rs.git", branch = "full_g" }
+heapless = "0.5.5"
+micromath = "1.0.1"
+
+[patch.crates-io]
+pygamer = { version = "0.5.0", git = "https://github.com/jacobrosenthal/atsamd", branch = "i2c-error" }
+
+[features]
+# ask the HAL to enable extra features
+default = ["pygamer/sd-card", "pygamer/usb"]
+
+# setting dev to same as release until theres a way to have
+# vscode run use release mode. Almost nobody has a debugger
+# hooked up anyway, but if you'll need to change this
+[profile.dev]
+codegen-units = 1
+debug = 1
+debug-assertions = false
+incremental = false
+lto = "fat"
+opt-level = 3 # neopixel prefers 3 over s
+overflow-checks = false
+
+[profile.release]
+codegen-units = 1
+debug = 1
+debug-assertions = false
+incremental = false
+lto = "fat"
+opt-level = 3 # neopixel prefers 3 over s
+overflow-checks = false

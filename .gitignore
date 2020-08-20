@@ -1,0 +1,4 @@
+/target
+Cargo.lock
+examples/magic_wand/train/
+examples/magic_wand/data.tar.gz

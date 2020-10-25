@@ -2,7 +2,7 @@
 //! https://learn.adafruit.com/tensorflow-lite-for-edgebadge-kit-quickstart/gesture-demo
 //!
 //! With the screen facing you, and the USB port pointing to the ceiling perform
-//! one of three gestures:
+//! one of three gestures. See the linked video for a demonstration of the gestures.
 //!
 //! Wing: This gesture is a W starting at your top left, going down, up, down up
 //! to your top right When that gesture is detected you'lll see the front
@@ -22,7 +22,7 @@
 //! * `rustup update` to get a recent nightly near august
 //!
 //! Upload:
-//! * `cargo +nightly hf2 --release --example magic_wand --features=usb,tf`
+//! * `cargo hf2 --example magic_wand --features=tf`
 //!
 //! You can get feedback from the device via serial over usb using 115200 baud
 //!
@@ -30,7 +30,7 @@
 //! infer using test data by using one of tf_test_slope or tf_test_ring features
 //!
 //! Record training Data by using the train feature
-//! * `cargo +nightly hf2 --release --example magic_wand --features=usb,tf,tf_train`
+//! * `cargo hf2 --example magic_wand --features=tf,tf_train`
 //!
 //! Note accelerometer seems to get stuck uploading. Until a solution is found,
 //! if the device doesn't use panic led, and unplug or toggle power switch.
@@ -163,8 +163,7 @@ const APP: () = {
         //  (x,y,z)
         let mut data = [0.0; N * 3];
 
-        //eh, ive seem my model work at least once..
-        let model = include_bytes!("./models/magic_wand_updated.tflite");
+        let model = include_bytes!("./models/magic_wand.tflite");
 
         #[cfg(feature = "tf_test_ring")]
         let test = include_bytes!("../models/ring_micro_f9643d42_nohash_4.data")
@@ -224,9 +223,9 @@ const APP: () = {
 
                 // test data is normalized to 1mg per digit
                 // shift to justify, .002 scale, *1000 for to mg
-                let x = (dat[0] >> 4) as f32 * 2.0;
-                let y = (dat[1] >> 4) as f32 * 2.0;
-                let z = (dat[2] >> 4) as f32 * 2.0;
+                let x = (dat[0] >> 4) as f32 * 20.0;
+                let y = (dat[1] >> 4) as f32 * 20.0;
+                let z = (dat[2] >> 4) as f32 * 20.0;
 
                 // invert and move around for our board orientation
                 data[n * 3] = -z;

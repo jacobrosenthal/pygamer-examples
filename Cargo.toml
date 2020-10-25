@@ -34,7 +34,6 @@ version = "0.1.0"
 features = ["cmsis-nn"]
 optional = true
 git = "https://github.com/jacobrosenthal/tfmicro"
-branch = "fromgit"
 
 [features]
 # ask the HAL to enable extra features
